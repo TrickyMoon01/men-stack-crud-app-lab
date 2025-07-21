@@ -12,6 +12,10 @@ mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}`);
 });
 
+
+// Import the car model
+const Car = require('./models/car.js');
+
 // GET /
 app.get('/', async (req, res) => {
     res.render('index.ejs');
