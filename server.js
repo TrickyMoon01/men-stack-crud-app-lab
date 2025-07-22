@@ -35,6 +35,12 @@ app.get('/cars/new', (req, res) => {
     res.render('cars/new.ejs');
 });
 
+app.get('/cars/:carId', async (req, res) => {
+    const foundCar = await Car.findById(req.params.carId);
+
+    res.render('cars/show.ejs', { car: foundCar });
+});
+
 // POST /cars
 app.post('/cars', async (req, res) => {
     if (req.body.isReadyToDrive === 'on') {
