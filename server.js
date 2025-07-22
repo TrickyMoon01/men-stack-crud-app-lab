@@ -3,6 +3,8 @@ dotenv.config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -18,6 +20,8 @@ const Car = require('./models/car.js');
 
 // adding middleware for app
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
+app.use(morgan('dev'));
 
 
 // GET /
@@ -50,6 +54,12 @@ app.post('/cars', async (req, res) => {
     }
 
     await Car.create(req.body);
+    res.redirect('/cars');
+});
+
+// DELETE route
+app.delete('/cars/:carId', async (req, res) => {
+    await Car.findByIdAndDelete(req.params.carId);
     res.redirect('/cars');
 });
 

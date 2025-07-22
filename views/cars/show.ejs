@@ -12,6 +12,12 @@
     <% } else { %>
         <p>This car is not ready to drive!</p>
     <% } %>
+
+    <form action="/cars/<%= car._id %>?_method=DELETE" method="POST">
+        <button type="'submit">Delete <%= car.name %></button>
+    </form>
+
+    
     <a href="/cars/">Back to Cars</a>
   </body>
 </html>
