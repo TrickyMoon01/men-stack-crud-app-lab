@@ -16,6 +16,10 @@ mongoose.connection.on('connected', () => {
 // Import the car model
 const Car = require('./models/car.js');
 
+// adding middleware for app
+app.use(express.urlencoded({ extended: false }));
+
+
 // GET /
 app.get('/', async (req, res) => {
     res.render('index.ejs');
@@ -26,6 +30,17 @@ app.get('/cars/new', (req, res) => {
     res.render('cars/new.ejs');
 });
 
+// POST /cars
+app.post('/cars', async (req, res) => {
+    if (req.body.isReadyToDrive === 'on') {
+        req.body.isReadyToDrive = true;
+    } else {
+        req.body.isReadyToDrive = false;
+    }
+
+    await Car.create(req.body);
+    res.redirect('/cars/new');
+});
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
