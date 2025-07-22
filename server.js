@@ -69,6 +69,18 @@ app.get('/cars/:carId/edit', async (req, res) => {
     res.render('cars/edit.ejs', { car: foundCar });
 });
 
+app.put('/cars/:carId', async (req, res) => {
+    if (req.body.isReadyToDrive === 'on') {
+        req.body.isReadyToDrive = true;
+    } else {
+        req.body.isReadyToDrive = false;
+    }
+
+    await Car.findByIdAndUpdate(req.params.carId, req.body);
+
+    res.redirect(`/cars/${req.params.carId}`);
+});
+
 app.listen(3000, () => {
     console.log('Listening on port 3000');
 });
